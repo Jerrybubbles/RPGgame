@@ -1,6 +1,8 @@
 #include "battle.h"
 #include <vector>
 #include <experimental/random>
+#include <stdlib.h>
+#include <time.h>
 
 Battle::Battle()
 {
@@ -26,11 +28,11 @@ void Battle::Battletime()
     enemylijst.push_back(enemy3ptr);
     enemylijst.push_back(enemy4ptr);
     enemylijst.push_back(enemy5ptr);
-
+    srand (time(NULL));
     for(int i = 1; i <= 3; i++)
     {
 
-    int random_number = std::experimental::randint(0, 4);
+    int random_number = rand() % 4;
         switch (i)
         {
         case 1 : case 2:
