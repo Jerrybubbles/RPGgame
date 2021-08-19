@@ -3,39 +3,18 @@
 #include <string.h>
 
 //Constructor
-Player::Player()
+Player::Player() : Entity{0,0,0}
 {
-    hitpoints = 0;
-    damage = 0;
+
 }
 //Destructor
 Player::~Player()
 {
     std::cout << "DECONSTRUCTED!!!!!!!!!!!" << std::endl;
 }
-//Getters and setters
-int Player::getHitpoints()
+
+
+void Player::printInfo()
 {
-    return this->hitpoints;
-}
-void Player::setHitpoints(int newHitpoints)
-{
-    this->hitpoints = newHitpoints;
-}
-int Player::getDamage()
-{
-    return this->damage;
-}
-void Player::setDamage(int newDamage)
-{
-    this->damage = newDamage;
-}
-//Functions
-void Player::hit(int hit)
-{
-    this->hitpoints -= hit;
-}
-void Player::heal()
-{
-    this->hitpoints += 10;
+    std::cout << "Dit is een player met hitpoints: " << getHitpoints() << " en een damage van " << getMinDamage() << " tot " << getMaxDamage() << "." << std::endl;
 }

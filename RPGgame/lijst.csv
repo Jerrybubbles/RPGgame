@@ -1,0 +1,60 @@
+1;clean main (i.e. nothing in the main that shoud be in a class);V;
+2;useful class (explain why);V;Entity
+3;useful and correct encapsulation (explain why);V;Enemy (naam in enemy)
+4;useful and correct inheritance (explain why);V;Entity -> Enemy & player
+5;useful and correct object composition (explain why);V;Battle bevat een monsterlijst
+6;useful and correct multiple inheritance (explain why);;
+7;correct base class;V;Entity 
+8;correct abstract base class;V;Entity
+9;useful virtual function;V;printinfo entity
+10;useful proven (dynamic) polymorphism;V;ctr click  printinfo
+11;at least 2 default constructors;V;Player and enemy
+12;at least 2 specific constructors;V;Player and enemy and entity
+13;member initialization in constructors (the stuff behind a colon);V;enemy cpp 17
+14;at least 2 destructors;V;Battle & player
+15;"useful useage of ""this"" (if the code does not work without it)";V;In entity -> if remove this dan wordt er niks aangewezen
+16;useful member function;V;hit & heal
+17;default values in function definition;;
+18;useful member variabel;V;naam in enemy, rest in entity
+19;useful getters and setters for member variables;V;enity,h
+20;correct protections;V;
+21;no mistake in object-oriented programming;V;
+22;no globals, but statics if needed;V;
+23;everything in one or more self-made namespace(s);V;
+24;maintanability by clean uniform code style and good function naming and/or comments everywhere;V;
+25;seperate header files;V;
+26;2 useful unsigned chars or other better usage of memory efficient type;V;game,cpp 15 + battle,cpp 86
+27;using the best suited type on a lot of places (almost everywhere possible);;
+28;at least 4 useful const references;V;enemy,h enemies vergelijken, enemy is const en kan dus niet veranderen
+29;correctly using const in almost all places (almost everywhere possible);V;maybe?
+30;at least 4 useful bool;;
+31;useful pointer declaration and usage;V;battle,h
+32;dynamic memory allocation (new);V;battle,cpp 55
+33;dynamic memory removing (delete);V;battle,cpp 24
+34;2 useful (modern) call-by-references;V;enemy,h operators je maakt geen kopie je refereert naar echte object door de ampersand
+35;useful string class usage;V;
+36;useful container class;V;Vector
+37;useful Qt class;;
+38;useful operator overloading;V;battle,cpp 66
+39;useful function overloading (non operator);;
+40;useful function overriding (non virtual);;
+41;useful template function or class;;
+42;useful non-type template arguments;;
+43;useful friend function or class;;
+44;correct useage of inline function;V;entity,h getters and setters
+45;useful recursive function;;
+46;useful usage of nullptr;V;geen dangling poiners bij destructors
+47;useful usage of (modern) file-I/O;V;
+48;correct and useful usage of command line parameters;V;
+49;useful usage of signals/slots;;
+50;useful usage of lambda function;V;
+51;one complete project that compiles and does not crash;V;
+52;working build manual as readme on GitHub (project must be possible to build from scratch on a clean PC);V;
+53;test-driven development (= written test plan or unit tests);;
+54;solved on 8 bug tickets;;
+55;reported 8 bug tickets on other projects;;
+56;usage of a GUI;;
+57;usage of OpenGL or other 3D engine;;
+58;useful usage of an external library (not Qt);;
+59;project that works with hardware;;
+60;a nice extra that you think that should deserve grading (stuff you put time in and is not rewarded by an item above);V;

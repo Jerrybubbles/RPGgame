@@ -1,7 +1,6 @@
 #include "enemy.h"
 #include <string>
-
-
+#include <iostream>
 
 //Constructor
 Enemy::Enemy()
@@ -15,15 +14,12 @@ Enemy::~Enemy()
 
 }
 //everything in one or more self-made namespace(s)
-Enemy::Enemy(std :: string name, int hitpoints, int damage)
+Enemy::Enemy(std :: string name, int hitpoints, int mindamage, int maxdamage) : Entity{hitpoints, mindamage, maxdamage}, name{name}
 {
-    //useful useage of "this" (if the code does not work without it)
-    this->name = name;
-    this->hitpoints = hitpoints;
-    this->damage = damage;
+
 }
 //Getters and setters
-std::string Enemy::getName()
+std::string Enemy::getName() const
 {
     return this->name;
 }
@@ -31,25 +27,35 @@ void Enemy::setName(std::string newName)
 {
     this->name = newName;
 }
-int Enemy::getHitpoints()
+
+void Enemy::printInfo()
 {
-    return this->hitpoints;
+    std::cout << "Dit is een schurk met naam " << getName() << " en een HP van " << getHitpoints() << " , de damage moet je zelf uitzoeken in de game!" << std::endl;
 }
-void Enemy::setHitpoints(int newHitpoints)
+
+bool Enemy::operator==(const Enemy &other) const
 {
-    this->hitpoints = newHitpoints;
+    return this->getName() == other.getName();
 }
-int Enemy::getDamage()
+
+bool Enemy::operator<(const Enemy &other) const
 {
-    return this->damage;
+    return this->getHitpoints() < other.getHitpoints();
 }
-void Enemy::setDamage(int newDamage)
+
+bool Enemy::operator>(const Enemy &other) const
 {
-    this->damage = newDamage;
+    return this->getHitpoints() > other.getHitpoints();
 }
-//Functions
-//useful member function
-void Enemy::hit(int hit)
+
+bool Enemy::operator>=(const Enemy &other) const
 {
-    this->hitpoints -= hit;
+    return this->getHitpoints() >= other.getHitpoints();
 }
+
+bool Enemy::operator<=(const Enemy &other) const
+{
+    return this->getHitpoints() <= other.getHitpoints();
+}
+
+

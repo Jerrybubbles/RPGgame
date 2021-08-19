@@ -3,16 +3,19 @@
 #include "battle.h"
 #include <iostream>
 #include <string.h>
+
 using namespace std;
 
 class Game
 {
 public:
-    Game();
+    Game(string path);
     void Start();
-
+    void maakMonster(string fileNaam);
+    void printMonsters(string fileNaam);
+    string getPath() {return path;};
 private:
-    int choice;
+    string path;
 };
 
 #endif // GAME_H

@@ -1,58 +1,141 @@
 #include "battle.h"
+#include "enemy.h"
 #include <vector>
 #include <experimental/random>
 #include <stdlib.h>
 #include <time.h>
+#include <sstream>
+#include <fstream>
+#include <string>
 
-Battle::Battle()
+void menu(){
+    cout << "a) attack\nb) heal\nUw keuze:" << endl;
+}
+
+Battle::Battle(string path): path{path}
 {
+    loadMonsters();
+}
 
+Battle::~Battle()
+{
+    for (unsigned long i = 0; i < monsterlijst.size(); i++)
+    {
+        delete monsterlijst[i];
+        monsterlijst[i] = nullptr;
+    }
+    monsterlijst.clear();
+    std::cout << "each monster deconstructed" << std::endl;
+}
+void Battle::loadMonsters()
+{
+    string fileNaam = getPath();
+    string gelezenRij = " ",kolom,temp;
+    fstream fileIn;
+    vector<string> rij;
+    fileIn.open(fileNaam, ios::in);
+
+    while(gelezenRij != ""){
+        rij.clear();
+
+        getline(fileIn, gelezenRij);
+
+        if( fileIn.eof() ){
+            break;
+        }
+
+        stringstream strstrm(gelezenRij);
+        while (getline(strstrm, kolom, ','))
+        {
+            rij.push_back(kolom);
+        }
+
+        string name = rij[0];
+        int hp = stoi(rij[1],nullptr,0), mindmg = stoi(rij[2],nullptr,0), maxdmg = stoi(rij[3],nullptr,0);
+        Enemy * enemyptr = new Enemy{rij[0], hp, mindmg, maxdmg};
+
+        monsterlijst.push_back(enemyptr);
+
+    }
+}
+
+// lambda
+void Battle::sortMonsters(){
+    sort(monsterlijst.begin(), monsterlijst.end(), [](Enemy * enemy1, Enemy * enemy2)
+    {
+        return *enemy2 < *enemy1;
+    });
 }
 
 void Battle::Battletime()
 {
-    //dynamic memory allocation (new)
-    Player player1{30,5};
-    Enemy* enemy1ptr = new Enemy("slang",50,5);
-    Enemy* enemy2ptr = new Enemy("rat",30,1);
-    Enemy* enemy3ptr = new Enemy("fairy",10,-5);
-    Enemy enemy4{"hobo",15,8};
-    Enemy* enemy4ptr = &enemy4;
-    Enemy enemy5{"draak",80,11};
-    Enemy* enemy5ptr = &enemy5;
     Enemy enemy;
-    //useful container class
-    std::vector <Enemy*> enemylijst;
-    enemylijst.push_back(enemy1ptr);
-    enemylijst.push_back(enemy2ptr);
-    enemylijst.push_back(enemy3ptr);
-    enemylijst.push_back(enemy4ptr);
-    enemylijst.push_back(enemy5ptr);
+
+    Entity * newEnemy = new Enemy{"heks", 10,0,0};
+    newEnemy->setMaxDamage(5);
+    newEnemy ->printInfo();
+
+
+    //To show the operator overloading
+    Enemy testEnemy{"dummy", 50,5,5}, testEnemy2{"dummy",45,5,5}, testEnemy3{"nietDummy", 55,5,5};
+    cout << ((testEnemy==testEnemy2)?"true":"false") << ((testEnemy==testEnemy3)?"true":"false") << endl;
+
+
     srand (time(NULL));
+
+    unsigned char action;
+
     for(int i = 1; i <= 3; i++)
     {
 
-    int random_number = rand() % 4;
+    int random_number = (rand() % (monsterlijst.size()-1))+1;
         switch (i)
         {
-        case 1 : case 2:
-            enemy = *enemylijst[random_number];
+        case 1: case 2:
+
+            sortMonsters();
+            enemy = *monsterlijst[random_number];
             cout << "Een " << enemy.getName() << " springt voor je, deze heeft " << enemy.getHitpoints() << " levenspunten." << endl;
             while(enemy.getHitpoints() > 0 && player1.getHitpoints() > 0)
             {
-                cout << "Jij hebt " << player1.getHitpoints() << " levenspunten. De vijand heeft er " << enemy.getHitpoints() << "." << endl;
+                cout << "Jij hebt " << player1.getHitpoints() << " levenspunten. De "<< enemy.getName() <<" heeft er " << enemy.getHitpoints() << "." << endl;
+                menu();
                 cin >> action;
-                if (action == 1)
+                while (cin.fail() || (action != 'a' && action != 'b')){
+                    cin.clear();
+                    cin.ignore();
+                    cout << "Geef een correcte input!" << endl;
+                    cin >> action;
+                }
+                if (action == 'a')
                 {
-                    cout << "aanval" << endl;
-                    enemy.hit(player1.getDamage());
+                    int attackValue;
+                    int roll = rand() % 5;
+                    if (roll >= 4)
+                    {
+                        attackValue = rand() % (player1.getMaxDamage() - player1.getMinDamage() +1) +player1.getMinDamage();
+                        attackValue *= 2;
+                        cout << "Crit Attack! Je valt aan voor " << attackValue << endl;
+                    }
+                    else
+                    {
+                        attackValue = rand() % (player1.getMaxDamage() - player1.getMinDamage() +1) +player1.getMinDamage(); //+1 to include the max damage;
+                        cout << "Je valt aan voor " << attackValue << endl;
+                    }
+
+                    enemy.hit(attackValue);
                 }
                 else
                 {
-                    cout << "genees";
-                    player1.heal();
+                    int randomValue;
+                    randomValue = rand() % 8 + 6;
+                    player1.heal(randomValue);
+                    cout << "Je geneest voor " << randomValue << endl;
                 }
-                    player1.hit(enemy.getDamage());
+                int attackValue;
+                attackValue = rand() % (enemy.getMaxDamage() - enemy.getMinDamage() +1) +enemy.getMinDamage();
+                cout << "De "<< enemy.getName() <<" valt aan voor " << attackValue << endl;
+                player1.hit(attackValue);
 
             }
             if (enemy.getHitpoints() <= 0)
@@ -67,24 +150,43 @@ void Battle::Battletime()
             break;
 
         case 3:
-            enemy = *enemylijst[4];
+
+            enemy = *monsterlijst[0];
             cout << "Een " << enemy.getName() << " springt voor je, deze heeft " << enemy.getHitpoints() << " levenspunten." << endl;
             while(enemy.getHitpoints() > 0 && player1.getHitpoints() > 0)
             {
-                cout << "Jij hebt " << player1.getHitpoints() << " levenspunten. De vijand heeft er " << enemy.getHitpoints() << "." << endl;
+                cout << "Jij hebt " << player1.getHitpoints() << " levenspunten. De " << enemy.getName() <<" heeft er " << enemy.getHitpoints() << "." << endl;
+                menu();
                 cin >> action;
-                if (action == 1)
+                if (action == 'a')
                 {
-                    cout << "aanval" << endl;
-                    enemy.hit(player1.getDamage());
+                    int attackValue;
+                    int roll = rand() % 5;
+                    if (roll >= 4)
+                    {
+                        attackValue = rand() % (player1.getMaxDamage() - player1.getMinDamage() +1) +player1.getMinDamage();
+                        attackValue *= 2;
+                        cout << "Crit Attack! Je valt aan voor " << attackValue << endl;
+                    }
+                    else
+                    {
+                        attackValue = rand() % (player1.getMaxDamage() - player1.getMinDamage() +1) +player1.getMinDamage(); //+1 to include the max damage;
+                        cout << "Je valt aan voor " << attackValue << endl;
+                    }
+
+                    enemy.hit(attackValue);
                 }
                 else
                 {
-                    cout << "genees";
-                    player1.heal();
+                    cout << "genees" << endl;
+                    int randomValue;
+                    randomValue = rand() % 8 + 3;
+                    player1.heal(randomValue);
                 }
-                    player1.hit(enemy.getDamage());
-
+                int attackValue;
+                attackValue = rand() % (enemy.getMaxDamage() - enemy.getMinDamage() +1) +enemy.getMinDamage();
+                cout << "De "<< enemy.getName() <<" valt aan voor " << attackValue << endl;
+                player1.hit(attackValue);
             }
             if (enemy.getHitpoints() <= 0)
             {
@@ -100,4 +202,8 @@ void Battle::Battletime()
     }
      cout << "einde!" << endl;
 
+    delete newEnemy;
+
 }
+
+

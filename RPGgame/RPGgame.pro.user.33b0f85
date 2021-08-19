@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE QtCreatorProject>
-<!-- Written by QtCreator 4.14.2, 2021-08-19T19:36:52. -->
+<!-- Written by QtCreator 4.14.2, 2021-07-10T22:30:38. -->
 <qtcreator>
  <data>
   <variable>EnvironmentId</variable>
@@ -294,10 +294,8 @@
     <valuelist type="QVariantList" key="CustomOutputParsers"/>
     <value type="int" key="PE.EnvironmentAspect.Base">2</value>
     <valuelist type="QVariantList" key="PE.EnvironmentAspect.Changes"/>
-    <value type="QString" key="ProjectExplorer.ProjectConfiguration.DisplayName">RPGgame2</value>
-    <value type="QString" key="ProjectExplorer.ProjectConfiguration.Id">Qt4ProjectManager.Qt4RunConfiguration:D:/PXL/jaar 1.5/CPP/RPGgame5/RPGgame/RPGgame.pro</value>
-    <value type="QString" key="ProjectExplorer.RunConfiguration.BuildKey">D:/PXL/jaar 1.5/CPP/RPGgame5/RPGgame/RPGgame.pro</value>
-    <value type="QString" key="RunConfiguration.Arguments">&quot;D:\\PXL\\jaar 1.5\\CPP\\RPGgame5\\RPGgame\\monsters.csv&quot;</value>
+    <value type="QString" key="ProjectExplorer.ProjectConfiguration.Id">Qt4ProjectManager.Qt4RunConfiguration:D:/PXL/jaar 1.5/CPP/RPGgame/RPGgame.pro</value>
+    <value type="QString" key="ProjectExplorer.RunConfiguration.BuildKey">D:/PXL/jaar 1.5/CPP/RPGgame/RPGgame.pro</value>
     <value type="bool" key="RunConfiguration.UseCppDebugger">false</value>
     <value type="bool" key="RunConfiguration.UseCppDebuggerAuto">true</value>
     <value type="bool" key="RunConfiguration.UseLibrarySearchPath">true</value>

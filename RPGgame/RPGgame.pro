@@ -6,6 +6,7 @@ CONFIG -= qt
 SOURCES += main.cpp \
     battle.cpp \
     enemy.cpp \
+    entity.cpp \
     game.cpp \
     player.cpp
 
@@ -15,6 +16,7 @@ HEADERS += \
 	card.h \
 	deck.h \
 	enemy.h \
+	entity.h \
 	game.h \
 	game.h \
 	hand.h \
